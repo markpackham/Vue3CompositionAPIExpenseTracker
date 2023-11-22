@@ -9,14 +9,29 @@
 
 <script>
 export default {
-    data() {
+    // Old Options API way of doing things
+    // data() {
+    //     return {
+    //         transactions: [
+    //             { id: 1, text: 'Flower', amount: -19.99 },
+    //             { id: 2, text: 'Salary', amount: 229.99 },
+    //             { id: 3, text: 'Book', amount: -10.99 },
+    //             { id: 4, text: 'Tip', amount: 19.99 },
+    //         ]
+    //     }
+    // }
+
+    // Newer Composition API way of doing things
+    setup() {
+        const transactions = [
+            { id: 1, text: 'Flower', amount: -19.99 },
+            { id: 2, text: 'Salary', amount: 229.99 },
+            { id: 3, text: 'Book', amount: -10.99 },
+            { id: 4, text: 'Tip', amount: 19.99 },
+        ];
+
         return {
-            transactions: [
-                { id: 1, text: 'Flower', amount: -19.99 },
-                { id: 2, text: 'Salary', amount: 229.99 },
-                { id: 3, text: 'Book', amount: -10.99 },
-                { id: 4, text: 'Tip', amount: 19.99 },
-            ]
+            transactions
         }
     }
 }
