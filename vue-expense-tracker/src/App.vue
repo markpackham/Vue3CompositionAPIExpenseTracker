@@ -2,7 +2,7 @@
   <Header />
   <div class="container">
     <Balance :total="total" />
-    <IncomeExpenses />
+    <IncomeExpenses :income="income" :expenses="expenses" />
     <TransactionList :transactions="transactions" />
     <AddTransaction />
   </div>
@@ -25,10 +25,34 @@ const transactions = ref([
   { id: 4, text: 'Tip', amount: 19.99 },
 ]);
 
+// Get total
 const total = computed(() => {
   return transactions.value.reduce((acc, transaction) => {
     return acc + transaction.amount;
     // start accumulator at 0
   }, 0)
 });
+
+// Get income
+const income = computed(() => {
+  return transactions.value
+    // We only care about positive numbers ergo "income"
+    .filter((transaction) => transaction.amount > 0)
+    .reduce((acc, transaction) => {
+      return acc + transaction.amount;
+      // 2 decimal places
+    }, 0).toFixed(2)
+});
+
+// Get expenses
+const expenses = computed(() => {
+  return transactions.value
+    // We only care about negative numbers hence an expense
+    .filter((transaction) => transaction.amount < 0)
+    .reduce((acc, transaction) => {
+      return acc + transaction.amount;
+      // 2 decimal places
+    }, 0).toFixed(2)
+});
+
 </script>
