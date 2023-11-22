@@ -1,3 +1,9 @@
 <template>
-  My App
+  <Header />
+  <div class="container">
+  </div>
 </template>
+
+<script setup>
+import Header from './components/Header.vue';
+</script>
