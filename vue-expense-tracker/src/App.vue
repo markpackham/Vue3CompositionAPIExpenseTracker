@@ -4,7 +4,7 @@
     <!-- Add "+"" to values to turn strings into numbers -->
     <Balance :total="+total" />
     <IncomeExpenses :income="+income" :expenses="+expenses" />
-    <TransactionList :transactions="transactions" />
+    <TransactionList :transactions="transactions" @transactionDeleted="handleTransactionDeleted" />
     <AddTransaction @transactionSubmitted="handleTransactionSubmitted" />
   </div>
 </template>
@@ -67,6 +67,13 @@ const handleTransactionSubmitted = (transactionData) => {
     amount: transactionData.amount,
   });
   toast.success('Transaction added');
+}
+
+// Delete transaction
+const handleTransactionDeleted = (id) => {
+  transactions.value = transactions.value.filter((transactions) => transactions.id !== id);
+
+  toast.success('Transaction deleted')
 }
 
 </script>
