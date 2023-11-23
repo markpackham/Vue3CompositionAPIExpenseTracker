@@ -1,10 +1,11 @@
 <template>
   <Header />
   <div class="container">
-    <Balance :total="total" />
+    <!-- Add "+"" to values to turn strings into numbers -->
+    <Balance :total="+total" />
     <IncomeExpenses :income="+income" :expenses="+expenses" />
     <TransactionList :transactions="transactions" />
-    <AddTransaction />
+    <AddTransaction @transactionSubmitted="handleTransactionSubmitted" />
   </div>
 </template>
 
@@ -15,7 +16,10 @@ import IncomeExpenses from './components/IncomeExpenses.vue';
 import TransactionList from './components/TransactionList.vue';
 import AddTransaction from './components/AddTransaction.vue';
 
+import { useToast } from 'vue-toastification';
 import { computed, ref } from 'vue';
+
+const toast = useToast();
 
 // Make array reactive via ref
 const transactions = ref([
@@ -54,5 +58,15 @@ const expenses = computed(() => {
       // 2 decimal places
     }, 0).toFixed(2)
 });
+
+// Add transaction
+const handleTransactionSubmitted = (transactionData) => {
+  transactions.value.push({
+    id: crypto.randomUUID(),
+    text: transactionData.text,
+    amount: transactionData.amount,
+  });
+  toast.success('Transaction added');
+}
 
 </script>
