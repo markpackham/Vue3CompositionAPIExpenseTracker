@@ -17,17 +17,30 @@ import TransactionList from './components/TransactionList.vue';
 import AddTransaction from './components/AddTransaction.vue';
 
 import { useToast } from 'vue-toastification';
-import { computed, ref } from 'vue';
+import { computed, ref, onMounted } from 'vue';
 
 const toast = useToast();
 
+// Dummy data
+// const transactions = ref([
+//   { id: 1, text: 'Flower', amount: -19.99 },
+//   { id: 2, text: 'Salary', amount: 229.99 },
+//   { id: 3, text: 'Book', amount: -10.99 },
+//   { id: 4, text: 'Tip', amount: 19.99 },
+// ]);
+
 // Make array reactive via ref
-const transactions = ref([
-  { id: 1, text: 'Flower', amount: -19.99 },
-  { id: 2, text: 'Salary', amount: 229.99 },
-  { id: 3, text: 'Book', amount: -10.99 },
-  { id: 4, text: 'Tip', amount: 19.99 },
-]);
+const transactions = ref([]);
+
+// onMounted like useEffect in React
+onMounted(() => {
+  // Grab from transactions from local storage
+  const savedTransactions = JSON.parse(localStorage.getItem('transactions'));
+
+  if (savedTransactions) {
+    transactions.value = savedTransactions;
+  }
+});
 
 // Get total
 const total = computed(() => {
